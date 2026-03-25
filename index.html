@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Portafolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-icons@v9/fonts/simpleicons.css">
+</head>
+<body>
+    <header class="hero">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">Juan Pablo Quijano Martinez</div>
+                <ul class="nav-menu">
+                    <li><a href="#about">Sobre mí</a></li>
+                    <li><a href="#skills">Habilidades</a></li>
+                    <li><a href="#projects">Proyectos</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+                <div class="theme-toggle">
+                    <button id="themeBtn">🌙</button>
+                </div>
+            </div>
+        </nav>
+        <div class="hero-content">
+            <h1>¡Hola! Soy <span class="highlight">Juan Pablo Quijano Martinez</span></h1>
+            <p class="hero-subtitle">Desarrollador apasionado por crear soluciones innovadoras. Aquí cuentas tu historia introductoria.</p>
+            <button class="cta-btn">Ver mis proyectos</button>
+        </div>
+    </header>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2>Sobre mí</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Aquí va tu historia: cómo empezaste en programación, tus experiencias, logros, etc. Ejemplo: "Desde niño me apasionaba la tecnología..."</p>
+                    <p>Actualmente me enfoco en desarrollo web y software con tecnologías modernas.</p>
+                </div>
+                <div class="about-image">
+                    <div><img src="71711426168d55388530719.351972400.340087001758811016.png" alt="Juan Pablo Quijano Martinez"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="education">
+        <div class="container">
+            <h2>Estudios</h2>
+            <div class="education-list">
+                <div class="education-item">
+                    <h3>Técnica: Desarrollador de software (Campuslands)</h3>
+                    <span>Formación profesional en desarrollo de software</span>
+                </div>
+                <div class="education-item">
+                    <h3>Secundaria: Colegio Campestre Goyavier</h3>
+                    <span>Bachillerato completo</span>
+                </div>
+                <div class="education-item">
+                    <h3>Básica: Instituto Caldas</h3>
+                    <span>Educación básica</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="languages" class="languages">
+        <div class="container">
+            <h2>Idiomas</h2>
+            <div class="languages-list">
+                <div class="language-item">
+                    <h3>Inglés</h3>
+                    <span>Nivel B2</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2>Habilidades</h2>
+            <div class="carousel-container">
+                <div class="carousel" id="skillsCarousel">
+                    <div class="carousel-track">
+                        <div class="skill-item" style="--anim-delay: 0s;">
+                            <img src="https://cdn.simpleicons.org/python/3776AB" alt="Python" class="skill-image" loading="lazy">
+                            <span>Python</span>
+                        </div>
+                        <div class="skill-item" style="--anim-delay: 0.1s;">
+                            <img src="https://cdn.simpleicons.org/csharp/9C6ADE" alt="C#" class="skill-image" loading="lazy">
+                            <span>C#</span>
+                        </div>
+                        <div class="skill-item" style="--anim-delay: 0.2s;">
+                            <img src="https://cdn.simpleicons.org/html5/E34F26" alt="HTML" class="skill-image" loading="lazy">
+                            <span>HTML</span>
+                        </div>
+                        <div class="skill-item" style="--anim-delay: 0.3s;">
+                            <img src="https://cdn.simpleicons.org/css3/1572B6" alt="CSS" class="skill-image" loading="lazy">
+                            <span>CSS</span>
+                        </div>
+                        <div class="skill-item" style="--anim-delay: 0.4s;">
+                            <img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="JavaScript" class="skill-image" loading="lazy">
+                            <span>JavaScript</span>
+                        </div>
+                        <div class="skill-item" style="--anim-delay: 0.5s;">
+                            <img src="https://cdn.simpleicons.org/git/F05032" alt="Git" class="skill-image" loading="lazy">
+                            <span>Git</span>
+                        </div>
+                        <div class="skill-item" style="--anim-delay: 0.6s;">
+                            <img src="https://cdn.simpleicons.org/github/181717" alt="GitHub" class="skill-image" loading="lazy">
+                            <span>GitHub</span>
+                        </div>
+                        <div class="skill-item" style="--anim-delay: 0.7s;">
+                            <img src="https://cdn.simpleicons.org/jira/0052CC" alt="Scrum" class="skill-image" loading="lazy">
+                            <span>Scrum</span>
+                        </div>
+                        <!-- Agrega más skills aquí -->
+                    </div>
+                </div>
+                <button class="carousel-btn prev" id="skillsPrev">❮</button>
+                <button class="carousel-btn next" id="skillsNext">❯</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2>Proyectos</h2>
+            <div class="carousel-container">
+                <div class="carousel" id="projectsCarousel">
+                    <div class="carousel-track">
+                        <div class="project-item">
+                            <div class="project-image">Proyecto 1</div>
+                            <h3>Proyecto 1</h3>
+                            <p>Descripción breve del proyecto 1.</p>
+                            <div class="project-links">
+                                <a href="#">Demo</a>
+                                <a href="#">Código</a>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <div class="project-image">Proyecto 2</div>
+                            <h3>Proyecto 2</h3>
+                            <p>Descripción breve del proyecto 2.</p>
+                            <div class="project-links">
+                                <a href="#">Demo</a>
+                                <a href="#">Código</a>
+                            </div>
+                        </div>
+                        <!-- Agrega más proyectos aquí -->
+                    </div>
+                </div>
+                <button class="carousel-btn prev" id="projectsPrev">❮</button>
+                <button class="carousel-btn next" id="projectsNext">❯</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contacto</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <p>¿Interesado en colaborar? Escríbeme.</p>
+                    <div class="social-links">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">GitHub</a>
+                        <a href="#">Email</a>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <input type="text" placeholder="Tu nombre" required>
+                    <input type="email" placeholder="Tu email" required>
+                    <textarea placeholder="Tu mensaje" required></textarea>
+                    <button type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Tu Nombre. Hecho con ❤️</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
