@@ -1,188 +1,455 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Portafolio</title>
+    <title>Juan Pablo Quijano — Developer</title>
+    <meta name="description" content="Portfolio de Juan Pablo Quijano Martinez, Desarrollador de Software">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-icons@v9/fonts/simpleicons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="hero">
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="logo">Juan Pablo Quijano Martinez</div>
-                <ul class="nav-menu">
-                    <li><a href="#about">Sobre mí</a></li>
-                    <li><a href="#skills">Habilidades</a></li>
-                    <li><a href="#projects">Proyectos</a></li>
-                    <li><a href="#contact">Contacto</a></li>
-                </ul>
-                <div class="theme-toggle">
-                    <button id="themeBtn">🌙</button>
-                </div>
-            </div>
-        </nav>
-        <div class="hero-content">
-            <h1>¡Hola! Soy <span class="highlight">Juan Pablo Quijano Martinez</span></h1>
-            <p class="hero-subtitle">Desarrollador apasionado por crear soluciones innovadoras. Aquí cuentas tu historia introductoria.</p>
-            <button class="cta-btn">Ver mis proyectos</button>
-        </div>
-    </header>
 
-    <section id="about" class="about">
-        <div class="container">
-            <h2>Sobre mí</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Aquí va tu historia: cómo empezaste en programación, tus experiencias, logros, etc. Ejemplo: "Desde niño me apasionaba la tecnología..."</p>
-                    <p>Actualmente me enfoco en desarrollo web y software con tecnologías modernas.</p>
+    <!-- Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo"><span class="bracket">&lt;</span>JP<span class="bracket">/&gt;</span></div>
+            <div class="preloader-bar"><div class="preloader-fill" id="preloaderFill"></div></div>
+            <span class="preloader-text" id="preloaderText">Iniciando...</span>
+        </div>
+    </div>
+
+    <!-- Custom cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Persistent fire/ember background canvas -->
+    <canvas id="fireCanvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="#" class="logo">
+                <span class="logo-bracket">&lt;</span>JP<span class="logo-bracket">/&gt;</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about"    class="nav-link" data-section="about">Sobre mí</a></li>
+                <li><a href="#skills"   class="nav-link" data-section="skills">Habilidades</a></li>
+                <li><a href="#projects" class="nav-link" data-section="projects">Proyectos</a></li>
+                <li><a href="#contact"  class="nav-link" data-section="contact">Contacto</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </button>
+                <button class="hamburger" id="hamburger" aria-label="Menú">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <canvas id="heroCanvas"></canvas>
+        <div class="hero-inner">
+            <div class="hero-tag">
+                <span class="blink-dot"></span>
+                Disponible para proyectos
+            </div>
+            <h1 class="hero-title">
+                <span class="greeting">Hola, soy</span>
+                <span class="hero-name">Juan Pablo</span>
+                <span class="typewriter-wrap">
+                    <span id="typewriter"></span><span class="type-cursor">|</span>
+                </span>
+            </h1>
+            <p class="hero-desc">
+                Desarrollador apasionado por construir experiencias digitales que marcan la diferencia.
+                Transformo ideas en código elegante y funcional.
+            </p>
+            <div class="hero-ctas">
+                <button class="btn-primary" id="ctaBtn">
+                    <span>Ver proyectos</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+                <a href="#contact" class="btn-ghost">Hablemos</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="stat-num" data-target="2">0</span><span class="stat-plus">+</span>
+                    <span class="stat-label">Años</span>
                 </div>
-                <div class="about-image">
-                    <div><img src="71711426168d55388530719.351972400.340087001758811016.png" alt="Juan Pablo Quijano Martinez"></div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat">
+                    <span class="stat-num" data-target="10">0</span><span class="stat-plus">+</span>
+                    <span class="stat-label">Proyectos</span>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat">
+                    <span class="stat-num" data-target="8">0</span><span class="stat-plus">+</span>
+                    <span class="stat-label">Tecnologías</span>
                 </div>
             </div>
+        </div>
+        <div class="scroll-hint">
+            <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+            <span>Scroll</span>
         </div>
     </section>
 
-    <section id="education" class="education">
+    <!-- About -->
+    <section id="about" class="section about">
         <div class="container">
-            <h2>Estudios</h2>
-            <div class="education-list">
-                <div class="education-item">
-                    <h3>Técnica: Desarrollador de software (Campuslands)</h3>
-                    <span>Formación profesional en desarrollo de software</span>
+            <div class="section-label">Sobre mí</div>
+            <h2 class="section-title">Apasionado por el <em>código</em></h2>
+            <div class="about-grid">
+                <div class="about-visual" data-reveal>
+                    <div class="about-img-container">
+                        <img
+                            src="71711426168d55388530719.351972400.340087001758811016.png"
+                            alt="Juan Pablo Quijano"
+                            class="about-img"
+                            onerror="this.style.display='none';document.querySelector('.avatar-fallback').style.display='flex'"
+                        >
+                        <div class="avatar-fallback"><span>JP</span></div>
+                        <div class="about-img-glow"></div>
+                    </div>
+                    <div class="floating-card card-1"><span>🐍</span> Python Dev</div>
+                    <div class="floating-card card-2"><span>🌐</span> Full Stack</div>
+                    <div class="floating-card card-3"><span>🇬🇧</span> Inglés B2</div>
                 </div>
-                <div class="education-item">
-                    <h3>Secundaria: Colegio Campestre Goyavier</h3>
-                    <span>Bachillerato completo</span>
-                </div>
-                <div class="education-item">
-                    <h3>Básica: Instituto Caldas</h3>
-                    <span>Educación básica</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="languages" class="languages">
-        <div class="container">
-            <h2>Idiomas</h2>
-            <div class="languages-list">
-                <div class="language-item">
-                    <h3>Inglés</h3>
-                    <span>Nivel B2</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2>Habilidades</h2>
-            <div class="carousel-container">
-                <div class="carousel" id="skillsCarousel">
-                    <div class="carousel-track">
-                        <div class="skill-item" style="--anim-delay: 0s;">
-                            <img src="https://cdn.simpleicons.org/python/3776AB" alt="Python" class="skill-image" loading="lazy">
-                            <span>Python</span>
+                <div class="about-content" data-reveal>
+                    <p class="about-lead">
+                        Técnico en Desarrollo de Software egresado de <strong>Campuslands Floridablanca</strong>,
+                        apasionado por construir soluciones que resuelven problemas reales.
+                    </p>
+                    <p>
+                        He trabajado con Python, JavaScript, HTML5, CSS3 y MySQL en proyectos que van desde
+                        sistemas de gestión de torneos hasta aplicaciones web y bases de datos relacionales.
+                        Me caracterizo por el trabajo en equipo, la comunicación efectiva y el aprendizaje rápido.
+                    </p>
+                    <div class="soft-skills">
+                        <span class="soft-badge">💡 Resolución de problemas</span>
+                        <span class="soft-badge">🤝 Trabajo en equipo</span>
+                        <span class="soft-badge">⚡ Aprendizaje rápido</span>
+                        <span class="soft-badge">🗣️ Comunicación efectiva</span>
+                        <span class="soft-badge">🔄 Adaptabilidad</span>
+                    </div>
+                    <div class="skill-bars">
+                        <div class="skill-bar-row">
+                            <div class="skill-bar-info"><span>Frontend</span><span>75%</span></div>
+                            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="75"></div></div>
                         </div>
-                        <div class="skill-item" style="--anim-delay: 0.1s;">
-                            <img src="https://cdn.simpleicons.org/csharp/9C6ADE" alt="C#" class="skill-image" loading="lazy">
-                            <span>C#</span>
+                        <div class="skill-bar-row">
+                            <div class="skill-bar-info"><span>Python</span><span>80%</span></div>
+                            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="80"></div></div>
                         </div>
-                        <div class="skill-item" style="--anim-delay: 0.2s;">
-                            <img src="https://cdn.simpleicons.org/html5/E34F26" alt="HTML" class="skill-image" loading="lazy">
-                            <span>HTML</span>
+                        <div class="skill-bar-row">
+                            <div class="skill-bar-info"><span>Bases de datos</span><span>70%</span></div>
+                            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="70"></div></div>
                         </div>
-                        <div class="skill-item" style="--anim-delay: 0.3s;">
-                            <img src="https://cdn.simpleicons.org/css3/1572B6" alt="CSS" class="skill-image" loading="lazy">
-                            <span>CSS</span>
-                        </div>
-                        <div class="skill-item" style="--anim-delay: 0.4s;">
-                            <img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="JavaScript" class="skill-image" loading="lazy">
-                            <span>JavaScript</span>
-                        </div>
-                        <div class="skill-item" style="--anim-delay: 0.5s;">
-                            <img src="https://cdn.simpleicons.org/git/F05032" alt="Git" class="skill-image" loading="lazy">
-                            <span>Git</span>
-                        </div>
-                        <div class="skill-item" style="--anim-delay: 0.6s;">
-                            <img src="https://cdn.simpleicons.org/github/181717" alt="GitHub" class="skill-image" loading="lazy">
-                            <span>GitHub</span>
-                        </div>
-                        <div class="skill-item" style="--anim-delay: 0.7s;">
-                            <img src="https://cdn.simpleicons.org/jira/0052CC" alt="Scrum" class="skill-image" loading="lazy">
-                            <span>Scrum</span>
-                        </div>
-                        <!-- Agrega más skills aquí -->
+                    </div>
+                    <div class="about-btn-row">
+                        <a href="#contact" class="btn-primary"><span>Contáctame</span></a>
                     </div>
                 </div>
-                <button class="carousel-btn prev" id="skillsPrev">❮</button>
-                <button class="carousel-btn next" id="skillsNext">❯</button>
             </div>
         </div>
     </section>
 
-    <section id="projects" class="projects">
+    <!-- Education Timeline -->
+    <section id="education" class="section education">
         <div class="container">
-            <h2>Proyectos</h2>
-            <div class="carousel-container">
-                <div class="carousel" id="projectsCarousel">
-                    <div class="carousel-track">
-                        <div class="project-item">
-                            <div class="project-image">Proyecto 1</div>
-                            <h3>Proyecto 1</h3>
-                            <p>Descripción breve del proyecto 1.</p>
-                            <div class="project-links">
-                                <a href="#">Demo</a>
-                                <a href="#">Código</a>
-                            </div>
-                        </div>
-                        <div class="project-item">
-                            <div class="project-image">Proyecto 2</div>
-                            <h3>Proyecto 2</h3>
-                            <p>Descripción breve del proyecto 2.</p>
-                            <div class="project-links">
-                                <a href="#">Demo</a>
-                                <a href="#">Código</a>
-                            </div>
-                        </div>
-                        <!-- Agrega más proyectos aquí -->
+            <div class="section-label">Formación</div>
+            <h2 class="section-title">Mi <em>trayectoria</em></h2>
+            <div class="timeline">
+                <div class="timeline-item" data-reveal>
+                    <div class="timeline-dot"><span>🎓</span></div>
+                    <div class="timeline-card">
+                        <span class="timeline-period">2023 — Presente</span>
+                        <h3>Técnico en Desarrollo de Software</h3>
+                        <p>Campuslands</p>
+                        <div class="timeline-tag">Formación Técnica</div>
                     </div>
                 </div>
-                <button class="carousel-btn prev" id="projectsPrev">❮</button>
-                <button class="carousel-btn next" id="projectsNext">❯</button>
+                <div class="timeline-item" data-reveal>
+                    <div class="timeline-dot"><span>📚</span></div>
+                    <div class="timeline-card">
+                        <span class="timeline-period">Graduado</span>
+                        <h3>Bachillerato</h3>
+                        <p>Colegio Campestre Goyavier</p>
+                        <div class="timeline-tag">Secundaria</div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-reveal>
+                    <div class="timeline-dot"><span>🌍</span></div>
+                    <div class="timeline-card">
+                        <span class="timeline-period">Nivel B2</span>
+                        <h3>Inglés</h3>
+                        <p>Comunicación profesional y técnica</p>
+                        <div class="timeline-tag">Idioma</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="contact">
+    <!-- Skills -->
+    <section id="skills" class="section skills">
         <div class="container">
-            <h2>Contacto</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <p>¿Interesado en colaborar? Escríbeme.</p>
-                    <div class="social-links">
-                        <a href="#">LinkedIn</a>
-                        <a href="#">GitHub</a>
-                        <a href="#">Email</a>
+            <div class="section-label">Stack</div>
+            <h2 class="section-title">Mis <em>tecnologías</em></h2>
+            <!-- SKILLS MARQUEE CAROUSEL -->
+            <div class="skills-marquee">
+                <div class="marquee-row" id="marqueeRow1">
+                    <div class="marquee-track">
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python"><span>Python</span><small>Avanzado</small></div>
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5"><span>HTML5</span><small>Experto</small></div>
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript"><span>JavaScript</span><small>Avanzado</small></div>
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git"><span>Git</span><small>Avanzado</small></div>
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="MySQL"><span>MySQL</span><small>Intermedio</small></div>
+                    </div>
+                    <div class="marquee-track" aria-hidden="true">
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python"><span>Python</span><small>Avanzado</small></div>
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5"><span>HTML5</span><small>Experto</small></div>
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript"><span>JavaScript</span><small>Avanzado</small></div>
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git"><span>Git</span><small>Avanzado</small></div>
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="MySQL"><span>MySQL</span><small>Intermedio</small></div>
                     </div>
                 </div>
-                <form class="contact-form">
-                    <input type="text" placeholder="Tu nombre" required>
-                    <input type="email" placeholder="Tu email" required>
-                    <textarea placeholder="Tu mensaje" required></textarea>
-                    <button type="submit">Enviar</button>
+                <div class="marquee-row reverse" id="marqueeRow2">
+                    <div class="marquee-track">
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt="C#"><span>C#</span><small>Intermedio</small></div>
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS3"><span>CSS3</span><small>Avanzado</small></div>
+                        <div class="skill-chip gh-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="GitHub"><span>GitHub</span><small>Avanzado</small></div>
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jira/jira-original.svg" alt="Scrum"><span>Scrum</span><small>Intermedio</small></div>
+                        <div class="skill-chip"><svg viewBox="0 0 24 24" width="40" height="40"><text x="4" y="17" font-family="monospace" font-size="13" font-weight="bold" fill="#f7df1e">{}</text></svg><span>JSON</span><small>Avanzado</small></div>
+                    </div>
+                    <div class="marquee-track" aria-hidden="true">
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt="C#"><span>C#</span><small>Intermedio</small></div>
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS3"><span>CSS3</span><small>Avanzado</small></div>
+                        <div class="skill-chip gh-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="GitHub"><span>GitHub</span><small>Avanzado</small></div>
+                        <div class="skill-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jira/jira-original.svg" alt="Scrum"><span>Scrum</span><small>Intermedio</small></div>
+                        <div class="skill-chip"><svg viewBox="0 0 24 24" width="40" height="40"><text x="4" y="17" font-family="monospace" font-size="13" font-weight="bold" fill="#f7df1e">{}</text></svg><span>JSON</span><small>Avanzado</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section projects">
+        <div class="container">
+            <div class="section-label">Portafolio</div>
+            <h2 class="section-title">Mis <em>proyectos</em></h2>
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="web">Web</button>
+                <button class="filter-btn" data-filter="python">Python</button>
+                <button class="filter-btn" data-filter="software">Software</button>
+            </div>
+            <div class="projects-grid" id="projectsGrid">
+
+                <!-- Proyecto 1: Sistema de Torneos -->
+                <article class="project-card" data-cat="python" data-reveal data-tilt>
+                    <div class="project-thumb" style="--c1:#1a1a2e;--c2:#16213e">
+                        <div class="code-preview">
+                            <div class="code-line"><span class="ck">class</span> <span class="cf">Tournament</span>:</div>
+                            <div class="code-line">&nbsp;&nbsp;<span class="ck">def</span> <span class="cf">register</span>(<span class="cv">team</span>):</div>
+                            <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">save_json</span>(<span class="cv">team</span>)</div>
+                        </div>
+                        <div class="project-overlay">
+                            <button class="plink video-btn" data-video="VIDEO_ID_AQUI" onclick="openVideoModal(this)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Demo
+                            </button>
+                            <a href="https://github.com" class="plink" target="_blank">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                                Código
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <h3>⚽ Gestión de Torneos de Fútbol</h3>
+                        <p>Sistema para gestionar torneos internacionales de fútbol. Persistencia de datos con archivos JSON y estructura modular orientada a escalabilidad.</p>
+                        <div class="project-tech">
+                            <span>Python</span><span>JSON</span><span>Git</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Proyecto 2: App Hotel -->
+                <article class="project-card" data-cat="web" data-reveal data-tilt>
+                    <div class="project-thumb" style="--c1:#0f3460;--c2:#533483">
+                        <div class="code-preview">
+                            <div class="code-line"><span class="ck">const</span> <span class="cv">auth</span> = <span class="cf">localStorage</span></div>
+                            <div class="code-line"><span class="cf">renderDashboard</span>(<span class="cs">'admin'</span>)</div>
+                            <div class="code-line"><span class="cf">crudOperations</span>()</div>
+                        </div>
+                        <div class="project-overlay">
+                            <a href="#" class="plink" target="_blank">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                                Demo
+                            </a>
+                            <button class="plink video-btn" data-video="VIDEO_ID_AQUI" onclick="openVideoModal(this)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Video
+                            </button>
+                            <a href="https://github.com" class="plink" target="_blank">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                                Código
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <h3>🏨 App Web de Gestión de Hotel</h3>
+                        <p>Aplicación para reservas hoteleras con arquitectura MVC, autenticación via LocalStorage y panel administrativo con dashboard de métricas y operaciones CRUD.</p>
+                        <div class="project-tech">
+                            <span>JavaScript</span><span>HTML5</span><span>CSS3</span><span>LocalStorage</span><span>Git</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Proyecto 3: Base de Datos Inmobiliaria -->
+                <article class="project-card" data-cat="software" data-reveal data-tilt>
+                    <div class="project-thumb" style="--c1:#1b4332;--c2:#2d6a4f">
+                        <div class="code-preview">
+                            <div class="code-line"><span class="ck">CREATE TRIGGER</span> <span class="cf">audit_log</span></div>
+                            <div class="code-line"><span class="ck">AFTER</span> <span class="cv">UPDATE</span> <span class="ck">ON</span> <span class="cf">properties</span></div>
+                            <div class="code-line"><span class="ck">FOR EACH</span> <span class="cn">ROW</span> ...</div>
+                        </div>
+                        <div class="project-overlay">
+                            <button class="plink video-btn" data-video="VIDEO_ID_AQUI" onclick="openVideoModal(this)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Demo
+                            </button>
+                            <a href="https://github.com" class="plink" target="_blank">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                                Código
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <h3>🏠 Base de Datos Inmobiliaria</h3>
+                        <p>Diseño y desarrollo de base de datos para sistema de gestión inmobiliaria. Triggers de auditoría para rastrear cambios de estado en propiedades y nuevos contratos.</p>
+                        <div class="project-tech">
+                            <span>MySQL</span><span>SQL</span><span>Normalización</span>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal" onclick="closeVideoModal()">
+        <div class="video-modal-inner" onclick="event.stopPropagation()">
+            <button class="video-modal-close" onclick="closeVideoModal()">✕</button>
+            <div class="video-wrapper">
+                <iframe id="videoIframe" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-label">Contacto</div>
+            <h2 class="section-title">Hablemos de tu <em>proyecto</em></h2>
+            <div class="contact-grid">
+                <div class="contact-info-col" data-reveal>
+                    <h3>¿Tienes un proyecto en mente?</h3>
+                    <p>Estoy disponible para proyectos freelance, colaboraciones y nuevas oportunidades. ¡No dudes en escribirme!</p>
+                    <div class="contact-socials">
+                        <a href="https://linkedin.com" target="_blank" class="social-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                            LinkedIn
+                        </a>
+                        <a href="https://github.com" target="_blank" class="social-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                            GitHub
+                        </a>
+                        <a href="tel:+573137713137" class="social-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.15 6.15l1.97-1.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            +57 313 771 3137
+                        </a>
+                        <a href="mailto:juanpablo@email.com" class="social-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            juanpablo@email.com
+                        </a>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm" data-reveal>
+                    <div class="field">
+                        <input type="text" name="name" id="inputName" required placeholder=" " autocomplete="name">
+                        <label for="inputName">Tu nombre</label>
+                    </div>
+                    <div class="field">
+                        <input type="email" name="email" id="inputEmail" required placeholder=" " autocomplete="email">
+                        <label for="inputEmail">Tu email</label>
+                    </div>
+                    <div class="field">
+                        <textarea name="message" id="inputMsg" rows="5" required placeholder=" "></textarea>
+                        <label for="inputMsg">Tu mensaje</label>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full" id="submitBtn">
+                        <span id="btnLabel">Enviar mensaje</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
                 </form>
             </div>
         </div>
     </section>
 
-    <footer>
-        <p>&copy; 2024 Tu Nombre. Hecho con ❤️</p>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-logo"><span class="logo-bracket">&lt;</span>JP<span class="logo-bracket">/&gt;</span></div>
+                <p>Diseñado y construido por <strong>Juan Pablo Quijano Martinez</strong></p>
+                <span class="footer-copy">© 2025 — Hecho con ❤️ y mucho ☕</span>
+            </div>
+        </div>
     </footer>
 
     <script src="script.js"></script>
+    <!-- INLINE COUNTER — runs unconditionally, no external dependencies -->
+    <script>
+    (function(){
+        var fired = false;
+        function runCounters(){
+            if(fired) return; fired = true;
+            document.querySelectorAll('.stat-num[data-target]').forEach(function(el){
+                var tgt = +el.getAttribute('data-target');
+                var start = null;
+                var dur = 1400;
+                function frame(ts){
+                    if(!start) start = ts;
+                    var p = Math.min((ts - start) / dur, 1);
+                    var ease = 1 - Math.pow(1 - p, 3); // easeOutCubic
+                    el.textContent = Math.round(ease * tgt);
+                    if(p < 1){ requestAnimationFrame(frame); }
+                    else {
+                        el.textContent = tgt;
+                        // Gold glow burst on completion
+                        el.classList.add('counter-done');
+                        setTimeout(function(){ el.classList.remove('counter-done'); }, 800);
+                    }
+                }
+                requestAnimationFrame(frame);
+            });
+        }
+        // Fire at 1.5s (after preloader) — two triggers as safety net
+        setTimeout(runCounters, 1500);
+        window.addEventListener('load', function(){ setTimeout(runCounters, 300); });
+    })();
+    </script>
 </body>
 </html>
