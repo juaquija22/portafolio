@@ -7,8 +7,9 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-    --bg:        #08080f;
-    --bg2:       #0e0e1c;
+    --bg:        rgba(8,8,15,0.3);
+    --bg2:       rgba(14,14,28,0.3);
+    --bg-solid:  #08080f;
     --surface:   rgba(255,255,255,0.04);
     --surface-h: rgba(255,255,255,0.08);
     --border:    rgba(255,255,255,0.08);
@@ -27,8 +28,9 @@
 }
 
 html[data-theme="light"] {
-    --bg:        #f4f4f8;
-    --bg2:       #ffffff;
+    --bg:        rgba(244,244,248,0.5);
+    --bg2:       rgba(255,255,255,0.5);
+    --bg-solid:  #f4f4f8;
     --surface:   rgba(0,0,0,0.04);
     --surface-h: rgba(0,0,0,0.07);
     --border:    rgba(0,0,0,0.09);
@@ -43,11 +45,44 @@ html { scroll-behavior: smooth; }
 
 body {
     font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
-    background: var(--bg);
+    background: transparent;
     color: var(--text);
     line-height: 1.6;
     overflow-x: hidden;
     cursor: none;
+}
+
+/* ============================================================
+   VIDEO BACKGROUND
+   ============================================================ */
+.video-bg-container {
+    position: fixed;
+    inset: -5%;
+    width: 110%;
+    height: 110%;
+    z-index: -1;
+    pointer-events: none;
+    transition: transform 0.1s ease-out;
+}
+.video-bg-container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 8, 15, 0.7);
+}
+html[data-theme="light"] .video-bg-container::after {
+    background: rgba(244, 244, 248, 0.82);
+}
+.tech-video {
+    width: 120vw;
+    height: 67.5vw;
+    min-height: 120vh;
+    min-width: 213.33vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
 }
 
 a  { color: inherit; text-decoration: none; }
@@ -65,44 +100,88 @@ em { font-style: normal; color: var(--gold); }
 ::selection { background: var(--gold); color: #000; }
 
 /* ============================================================
-   PRELOADER
+   INTRO EXPERIENCE
    ============================================================ */
-.preloader {
+.intro-screen {
     position: fixed; inset: 0; z-index: 9999;
-    background: var(--bg);
+    background: var(--bg-solid, #04040a);
     display: flex; align-items: center; justify-content: center;
-    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+    transition: transform 1s cubic-bezier(0.8, 0, 0.2, 1), opacity 0.8s ease;
 }
-.preloader.done {
-    opacity: 0; pointer-events: none; transform: scale(1.04);
+.intro-screen.unlocked {
+    transform: scale(1.4);
+    opacity: 0;
+    pointer-events: none;
 }
-.preloader-content { text-align: center; }
-.preloader-logo {
+.intro-content {
+    text-align: center;
+    max-width: 600px; width: 90%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.intro-logo {
     font-family: 'Fira Code', monospace;
-    font-size: 2.8rem; font-weight: 700;
+    font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700;
     color: var(--gold); margin-bottom: 2rem;
-    letter-spacing: 0.08em;
-    animation: logoPulse 1s ease-in-out infinite alternate;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 20px rgba(212,175,55,0.4);
+    animation: logoPulse 2s ease-in-out infinite alternate;
 }
 @keyframes logoPulse {
-    from { opacity: 0.7; }
-    to   { opacity: 1;   }
+    from { opacity: 0.7; filter: drop-shadow(0 0 5px rgba(212,175,55,0.2)); }
+    to   { opacity: 1;   filter: drop-shadow(0 0 15px rgba(212,175,55,0.6)); }
 }
-.preloader-logo .bracket { color: var(--text3); }
-.preloader-bar {
-    width: 220px; height: 2px;
-    background: var(--surface); border-radius: 1px;
-    overflow: hidden; margin: 0 auto 1rem;
-}
-.preloader-fill {
-    height: 100%; width: 0%;
-    background: linear-gradient(90deg, var(--gold), var(--gold2));
-    border-radius: 1px;
-}
-.preloader-text {
-    font-size: 0.78rem; color: var(--text3);
-    letter-spacing: 0.25em; text-transform: uppercase;
+.intro-logo .logo-bracket { color: var(--text3); }
+
+.intro-terminal {
     font-family: 'Fira Code', monospace;
+    font-size: 0.9rem; color: var(--gold);
+    text-align: left; width: 100%; min-height: 180px;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(212,175,55,0.3);
+    padding: 24px; border-radius: 8px;
+    margin-bottom: 2.5rem;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.9), 0 0 30px rgba(212,175,55,0.1);
+    position: relative;
+    overflow: hidden;
+}
+.intro-terminal::after {
+    content: '';
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px);
+    pointer-events: none;
+}
+.intro-terminal p { 
+    margin: 6px 0; opacity: 0; 
+    animation: termFadeIn 0.1s forwards; 
+    display: flex; align-items: center;
+}
+@keyframes termFadeIn { to { opacity: 1; } }
+
+.intro-btn {
+    font-family: 'Fira Code', monospace;
+    font-size: 1.15rem; font-weight: 700; color: #04040a;
+    background: var(--gold);
+    border: 2px solid var(--gold);
+    padding: 16px 36px; border-radius: 4px;
+    cursor: pointer; position: relative; overflow: hidden;
+    text-transform: uppercase; letter-spacing: 0.2em;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 25px rgba(212,175,55,0.3);
+}
+.intro-btn:hover {
+    background: transparent; color: var(--gold);
+    box-shadow: 0 0 45px rgba(212,175,55,0.6);
+}
+.anim-glitch-out {
+    animation: glitchOut 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+@keyframes glitchOut {
+    0%   { transform: scale(1); filter: blur(0); }
+    20%  { transform: scale(0.95); filter: blur(2px); opacity: 0.8; }
+    40%  { transform: scale(1.05) translate(-10px, 10px); color: #0ff; opacity: 0.9; }
+    60%  { transform: scale(0.9) translate(10px, -10px); color: #f0f; opacity: 0.9; }
+    80%  { transform: scale(1.1) translate(0, 0); filter: blur(4px); opacity: 0.5; }
+    100% { transform: scale(0); filter: blur(10px); opacity: 0; }
 }
 
 /* ============================================================
@@ -127,13 +206,34 @@ em { font-style: normal; color: var(--gold); }
     transition: transform 0.05s;
 }
 .cursor.hover {
-    width: 56px; height: 56px;
-    background: rgba(212,175,55,0.08);
-    border-color: var(--gold2);
+    width: 64px; height: 64px;
+    border-radius: 4px;
+    border: none;
+    background-color: transparent;
+    background-image: 
+        linear-gradient(var(--gold), var(--gold)), linear-gradient(var(--gold), var(--gold)),
+        linear-gradient(var(--gold), var(--gold)), linear-gradient(var(--gold), var(--gold)),
+        linear-gradient(var(--gold), var(--gold)), linear-gradient(var(--gold), var(--gold)),
+        linear-gradient(var(--gold), var(--gold)), linear-gradient(var(--gold), var(--gold));
+    background-repeat: no-repeat;
+    background-size: 16px 2px, 2px 16px;
+    background-position: 
+        top left, top left,
+        top right, top right,
+        bottom left, bottom left,
+        bottom right, bottom right;
+    box-shadow: 0 0 15px rgba(212,175,55,0.2);
+    animation: tacticalPulse 1.5s infinite alternate;
+}
+@keyframes tacticalPulse {
+    from { filter: drop-shadow(0 0 2px var(--gold)); }
+    to   { filter: drop-shadow(0 0 10px var(--gold2)); }
 }
 .cursor.clicking {
     width: 26px; height: 26px;
-    background: rgba(212,175,55,0.15);
+    background: rgba(212,175,55,0.3);
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
 }
 
 @media (hover: none) {
@@ -627,7 +727,25 @@ html[data-theme="light"] .skill-chip {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius); overflow: hidden; transition: var(--t);
     opacity: 1; transform: scale(1);
+    position: relative; /* for laser scanning */
+    --holo-x: 50%; --holo-y: 50%;
 }
+.project-card::before {
+    content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 2px;
+    background: var(--gold);
+    box-shadow: 0 0 15px var(--gold), 0 0 30px var(--gold2);
+    z-index: 10; pointer-events: none; opacity: 0;
+}
+.project-card:hover::before {
+    animation: scanLaser 2s linear infinite;
+}
+@keyframes scanLaser {
+    0%   { top: -10%; opacity: 0; }
+    5%   { top: 0%;   opacity: 1; }
+    95%  { top: 100%; opacity: 1; }
+    100% { top: 110%; opacity: 0; }
+}
+
 .project-card:hover {
     border-color: rgba(212,175,55,0.3);
     box-shadow: var(--shadow);
@@ -780,6 +898,133 @@ html[data-theme="light"] .skill-chip {
 }
 .footer p { color: var(--text2); font-size: 0.88rem; }
 .footer-copy { color: var(--text3); font-size: 0.8rem; }
+
+/* ============================================================
+   MINIGAME SECTION
+   ============================================================ */
+.minigame { background: var(--bg); text-align: center; }
+.minigame-card {
+    background: var(--surface);
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: var(--radius);
+    padding: 3rem 2rem;
+    max-width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 0 30px rgba(212,175,55,0.05);
+    transition: var(--t);
+}
+.minigame-card:hover {
+    box-shadow: 0 0 40px rgba(212,175,55,0.15);
+    border-color: var(--gold);
+    transform: translateY(-5px);
+}
+.minigame-icon {
+    width: 70px; height: 70px;
+    margin: 0 auto 1.5rem;
+    background: rgba(212,175,55,0.1);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+}
+.minigame-card p {
+    color: var(--text2);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+.minigame-input-group {
+    display: flex;
+    gap: 10px;
+}
+.minigame-input-group input {
+    flex: 1;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 12px 20px;
+    color: #4ade80;
+    font-family: 'Fira Code', monospace;
+    font-size: 1rem;
+    transition: var(--t);
+    outline: none;
+}
+.minigame-input-group input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(212,175,55,0.3);
+}
+
+.hack-hint-accordion {
+    margin: 1.5rem 0;
+    text-align: left;
+    background: rgba(212,175,55,0.05);
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: var(--t);
+}
+.hack-hint-accordion summary {
+    padding: 12px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--gold);
+    list-style: none; /* remove default arrow */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.hack-hint-accordion summary::-webkit-details-marker { display: none; }
+.hack-hint-accordion summary::after {
+    content: '+';
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+.hack-hint-accordion[open] summary::after {
+    transform: rotate(45deg);
+}
+.hack-hint-content {
+    padding: 0 16px 16px;
+    color: var(--text2);
+    font-size: 0.95rem;
+}
+.hack-hint-content strong {
+    color: #4ade80;
+    font-family: 'Fira Code', monospace;
+    background: rgba(74,222,128,0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.hack-error {
+    color: #ff4757 !important;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem !important;
+    margin-top: 1rem !important;
+    margin-bottom: 0 !important;
+    min-height: 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* ============================================================
+   FOOTER HIDDEN SECRET
+   ============================================================ */
+.hidden-secret {
+    margin-top: 2rem;
+    font-size: 0.75rem;
+    color: transparent; /* Invisible por defecto */
+    transition: color 0.4s ease;
+    cursor: default;
+    user-select: none;
+}
+.hidden-secret:hover {
+    color: var(--text3); /* Se ilumina ligeramente al hacer hover sobre el area */
+}
+.hidden-secret span {
+    font-family: 'Fira Code', monospace;
+    font-weight: 700;
+}
+.hidden-secret:hover span {
+    color: var(--gold); /* La palabra destaque en dorado */
+}
 
 /* ============================================================
    REVEAL ANIMATIONS

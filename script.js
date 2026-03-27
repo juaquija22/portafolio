@@ -1,33 +1,106 @@
 /* ============================================================
    PORTFOLIO SCRIPT — Juan Pablo Quijano Martinez
+/* ============================================================
+   AUDIO API (Sci-Fi effects)
    ============================================================ */
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+function initAudio() {
+    if (!audioCtx) audioCtx = new AudioContext();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+function playBeep() {
+    if (!audioCtx || audioCtx.state === 'suspended') return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(800 + Math.random()*400, audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.015, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.05);
+}
+function playPowerUp() {
+    if (!audioCtx || audioCtx.state === 'suspended') return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(50, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.8);
+    gain.gain.setValueAtTime(0, audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.2);
+    gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.8);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.8);
+}
 
 /* ============================================================
-   PRELOADER
+   INTRO TERMINAL EXPERIENCE
    ============================================================ */
 (function () {
-    const fill   = document.getElementById('preloaderFill');
-    const text   = document.getElementById('preloaderText');
-    const loader = document.getElementById('preloader');
-    if (!loader) return;
+    const intro = document.getElementById('introScreen');
+    const terminal = document.getElementById('introTerminal');
+    const btn = document.getElementById('startSystemBtn');
+    if (!intro || !terminal || !btn) return;
 
-    const msgs = ['Iniciando...', 'Cargando assets...', 'Casi listo...', '¡Listo! 🚀'];
-    let progress = 0;
+    // Freeze scroll
+    document.body.style.overflow = 'hidden';
 
-    const interval = setInterval(() => {
-        progress += Math.random() * 18 + 6;
-        if (progress > 100) progress = 100;
-        fill.style.width = progress + '%';
-        text.textContent = msgs[Math.min(3, Math.floor(progress / 25))];
+    // Hacker typing lines
+    const lines = [
+        "Iniciando secuencia de arranque del portafolio...",
+        "Estableciendo conexión encriptada de 256 bits...",
+        "Cargando módulos de compilación cruzada [██████████] 100%",
+        "Sincronizando animaciones del DOM... OK",
+        "Análisis de entorno táctico... Completado.",
+        "SISTEMA PREPARADO. Esperando autorización de origen."
+    ];
 
-        if (progress >= 100) {
-            clearInterval(interval);
+    let currentLine = 0;
+    
+    function typeLine() {
+        if (currentLine >= lines.length) {
             setTimeout(() => {
-                loader.classList.add('done');
-                setTimeout(() => loader.remove(), 600);
+                btn.style.display = 'inline-block';
+                btn.style.animation = 'termFadeIn 0.8s forwards';
             }, 300);
+            return;
         }
-    }, 90);
+
+        const p = document.createElement('p');
+        p.textContent = '> ' + lines[currentLine];
+        terminal.appendChild(p);
+        currentLine++;
+        setTimeout(typeLine, 250 + Math.random() * 450); 
+    }
+
+    setTimeout(typeLine, 800);
+
+    btn.addEventListener('click', () => {
+        initAudio();
+        playPowerUp();
+        // Global glitch flash
+        const flash = document.createElement('div');
+        flash.className = 'click-flash';
+        flash.style.cssText = 'left: 50%; top: 50%; width: 100vw; height: 100vh; animation: flashBurst 0.7s ease-out forwards; pointer-events: none; z-index: 10000; position: fixed; transform: translate(-50%, -50%); border-radius: 0; background: rgba(255,255,255,0.85);';
+        document.body.appendChild(flash);
+        setTimeout(() => flash.remove(), 800);
+
+        btn.classList.add('anim-glitch-out');
+        terminal.style.transition = 'opacity 0.2s';
+        terminal.style.opacity = '0';
+        
+        setTimeout(() => {
+            intro.classList.add('unlocked');
+            document.body.style.overflow = '';
+            document.dispatchEvent(new Event('introFinished'));
+            setTimeout(() => intro.remove(), 1200);
+        }, 500);
+    });
 })();
 
 /* ============================================================
@@ -231,7 +304,7 @@ window.addEventListener('scroll', () => {
             y: isCursor ? y : canvas.height + 10,
             vx: (Math.random() - 0.5) * (isCursor ? 3 : 0.8),
             vy: isCursor ? -(2 + Math.random() * 5) : -(0.3 + Math.random() * 1.5),
-            r:  isCursor ? (2 + Math.random() * 5) : (1 + Math.random() * 2.5),
+            r:  isCursor ? (1 + Math.random() * 2) : (1 + Math.random() * 2.5),
             life: 0,
             maxLife: isCursor ? (0.4 + Math.random() * 0.5) : (0.5 + Math.random() * 0.5),
             hue: 15 + Math.random() * 40,
@@ -239,31 +312,19 @@ window.addEventListener('scroll', () => {
         };
     }
 
-    // Seed ambient particles
-    for (let i = 0; i < 60; i++) {
-        const p = createParticle(0, 0, 'ambient');
-        p.y = Math.random() * canvas.height;
-        p.life = Math.random() * p.maxLife;
-        particles.push(p);
-    }
-
+    // Ambient particles removed as per user request
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // Spawn cursor particles based on mouse speed
         if (mx > 0 && my > 0 && mouseSpeed > 1) {
-            const count = Math.min(Math.floor(mouseSpeed / 3), 8);
+            const count = Math.min(Math.floor(mouseSpeed / 8), 2);
             for (let i = 0; i < count; i++) {
                 particles.push(createParticle(mx, my, 'cursor'));
             }
         }
 
-        // Keep ambient count steady
-        const ambientCount = particles.filter(p => p.type === 'ambient').length;
-        if (ambientCount < 50) {
-            particles.push(createParticle(0, 0, 'ambient'));
-        }
-
+        // Keeping ambient count logic removed to stop ambient fire
         // Update and draw
         for (let i = particles.length - 1; i >= 0; i--) {
             const p = particles[i];
@@ -321,6 +382,14 @@ window.addEventListener('scroll', () => {
         mouseSpeed = Math.hypot(dx, dy);
         mx = e.clientX;
         my = e.clientY;
+
+        // Video parallax
+        const bg = document.getElementById('videoBackground');
+        if (bg) {
+            const px = (e.clientX / window.innerWidth - 0.5) * 30;
+            const py = (e.clientY / window.innerHeight - 0.5) * 30;
+            bg.style.transform = `translate(${-px}px, ${-py}px)`;
+        }
     }, { passive: true });
 
     resize();
@@ -504,7 +573,6 @@ class TextScramble {
         this.chars = '01アイウエオカキ!@#$%[]{}ABCDEF<>?/|\\';
         this.origHTML = el.innerHTML;
         this.origText = el.textContent;
-        this.update = this.update.bind(this);
     }
     run() {
         const txt = this.origText;
@@ -524,7 +592,10 @@ class TextScramble {
                 done++;
                 out += q.to;
             } else if (this.frame >= q.start) {
-                if (Math.random() < 0.28) q.char = this.chars[Math.floor(Math.random() * this.chars.length)];
+                if (Math.random() < 0.28) {
+                    q.char = this.chars[Math.floor(Math.random() * this.chars.length)];
+                    if (typeof playBeep === 'function' && Math.random() < 0.15) playBeep();
+                }
                 out += `<span class="scramble-char">${q.char || q.to}</span>`;
             } else {
                 out += q.to === ' ' ? ' ' : '_';
@@ -540,7 +611,7 @@ class TextScramble {
     }
 }
 
-document.querySelectorAll('.section-title').forEach(el => {
+document.querySelectorAll('.section-title, .about-lead, .hero-desc, .project-body h3').forEach(el => {
     const sc = new TextScramble(el);
     const obs = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting) {
@@ -740,13 +811,13 @@ document.addEventListener('mousemove', function (e) {
     _lastFire = now;
     _fireCount++;
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 1; i++) {
         const p    = document.createElement('div');
         const hue  = 10 + Math.random() * 50;
-        const size = 4 + Math.random() * 14;
-        const life = 320 + Math.random() * 420;
-        const vx   = ((Math.random() - 0.5) * 32).toFixed(1);
-        const vy   = (-(18 + Math.random() * 44)).toFixed(1);
+        const size = 3 + Math.random() * 6;
+        const life = 180 + Math.random() * 200;
+        const vx   = ((Math.random() - 0.5) * 20).toFixed(1);
+        const vy   = (-(10 + Math.random() * 30)).toFixed(1);
 
         p.className = 'fire-particle';
         p.style.cssText = `
@@ -763,8 +834,8 @@ document.addEventListener('mousemove', function (e) {
         setTimeout(() => p.remove(), life + 50);
     }
 
-    // Every 3rd frame: lingering ember spark
-    if (_fireCount % 3 === 0) {
+    // Lingering ember spark removed as requested by user
+    if (false) {
         const ember = document.createElement('div');
         const eSize = 2 + Math.random() * 5;
         const eLife = 700 + Math.random() * 1200;
@@ -894,3 +965,158 @@ document.getElementById('contactForm')?.addEventListener('submit', async functio
         this.reset();
     }, 3200);
 });
+
+/* ============================================================
+   EASTER EGG: HACK MODE & MINIGAME
+   ============================================================ */
+function startHackMode() {
+    let gameWrap = document.getElementById('gameOverlay');
+    if (!gameWrap) {
+        gameWrap = document.createElement('div');
+        gameWrap.id = 'gameOverlay';
+        gameWrap.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--gold);font-family:monospace;';
+        
+        gameWrap.innerHTML = `
+            <h2 style="margin-bottom:20px; font-size:1.5rem; text-transform:uppercase; letter-spacing:4px; text-shadow:0 0 10px var(--gold);">SISTEMA COMPROMETIDO</h2>
+            <p style="margin-bottom:15px; color:#4ade80;">Presiona <span style="background:#4ade80;color:#000;padding:2px 8px;border-radius:4px;">ESPACIO</span> para saltar</p>
+            <canvas id="gameCanvas" width="600" height="200" style="border:2px solid var(--gold); border-radius:8px; box-shadow:0 0 20px rgba(212,175,55,0.2); background:#04040a; max-width:90vw;"></canvas>
+            <button id="closeGameBtn" style="margin-top:30px; padding:10px 24px; background:transparent; color:var(--text); border:1px solid var(--border); border-radius:50px; cursor:none; font-family:inherit; transition:0.3s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)'">CERRAR SESIÓN</button>
+        `;
+        document.body.appendChild(gameWrap);
+        
+        document.getElementById('closeGameBtn').addEventListener('click', () => {
+            gameWrap.style.display = 'none';
+        });
+
+        const cvs = document.getElementById('gameCanvas');
+        const ctx = cvs.getContext('2d');
+        
+        let player = { x: 50, y: 150, w: 20, h: 20, vy: 0, gravity: 0.6, jump: -10, grounded: true };
+        let obstacles = [];
+        let frame = 0;
+        let score = 0;
+        let isGameOver = false;
+
+        function resetGame() {
+            player.y = 150; player.vy = 0; player.grounded = true;
+            obstacles = [];
+            frame = 0;
+            score = 0;
+            isGameOver = false;
+        }
+
+        window.addEventListener('keydown', e => {
+            if (e.code === 'Space' && gameWrap.style.display !== 'none') {
+                e.preventDefault();
+                if (isGameOver) resetGame();
+                else if (player.grounded) {
+                    player.vy = player.jump;
+                    player.grounded = false;
+                    if(typeof playBeep === 'function') playBeep();
+                }
+            }
+        });
+
+        function loop() {
+            if (gameWrap.style.display === 'none') {
+                requestAnimationFrame(loop);
+                return;
+            }
+            
+            ctx.clearRect(0,0,cvs.width,cvs.height);
+            
+            if (!isGameOver) {
+                player.vy += player.gravity;
+                player.y += player.vy;
+                if (player.y >= 180 - player.h) {
+                    player.y = 180 - player.h;
+                    player.vy = 0;
+                    player.grounded = true;
+                }
+                
+                if (frame % 90 === 0) {
+                    obstacles.push({ x: cvs.width, y: 180 - 30, w: 15, h: 30, speed: 5 + Math.random()*3 });
+                }
+                
+                for (let i = obstacles.length - 1; i >= 0; i--) {
+                    let obs = obstacles[i];
+                    obs.x -= obs.speed;
+                    
+                    if (player.x < obs.x + obs.w && player.x + player.w > obs.x &&
+                        player.y < obs.y + obs.h && player.y + player.h > obs.y) {
+                        isGameOver = true;
+                    }
+                    
+                    if (obs.x + obs.w < 0) {
+                        obstacles.splice(i, 1);
+                        score++;
+                    }
+                }
+                frame++;
+            }
+            
+            ctx.fillStyle = 'rgba(212,175,55,0.3)';
+            ctx.fillRect(0, 180, cvs.width, 20);
+            
+            ctx.fillStyle = '#4ade80';
+            ctx.shadowColor = '#4ade80'; ctx.shadowBlur = 10;
+            ctx.fillRect(player.x, player.y, player.w, player.h);
+            
+            ctx.fillStyle = '#ff4757';
+            ctx.shadowColor = '#ff4757'; ctx.shadowBlur = 10;
+            obstacles.forEach(o => ctx.fillRect(o.x, o.y, o.w, o.h));
+            
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = 'var(--gold)';
+            ctx.font = '16px monospace';
+            ctx.fillText('SCORE: ' + score, 20, 30);
+            
+            if (isGameOver) {
+                ctx.fillStyle = 'rgba(0,0,0,0.7)';
+                ctx.fillRect(0,0,cvs.width,cvs.height);
+                ctx.fillStyle = 'var(--gold)';
+                ctx.font = '24px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText('SISTEMA CAÍDO - Presiona ESPACIO', cvs.width/2, cvs.height/2);
+                ctx.textAlign = 'left';
+            }
+            
+            requestAnimationFrame(loop);
+        }
+        
+        if(typeof playPowerUp === 'function') playPowerUp();
+        loop();
+    } else {
+        gameWrap.style.display = 'flex';
+        if(typeof playPowerUp === 'function') playPowerUp();
+    }
+}
+
+(function() {
+
+    // 2. Minigame UI
+    const btn = document.getElementById('hackBtn');
+    const input = document.getElementById('hackInput');
+    const errorMsg = document.getElementById('hackError');
+    if (!btn || !input) return;
+
+    function triggerHack() {
+        const val = input.value.trim().toLowerCase();
+        if (val === 'hack') {
+            errorMsg.style.opacity = '0';
+            input.value = '';
+            startHackMode();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            errorMsg.textContent = 'ERROR: Acceso denegado.';
+            errorMsg.style.opacity = '1';
+            input.value = '';
+            setTimeout(() => { errorMsg.style.opacity = '0'; }, 3000);
+        }
+    }
+
+    btn.addEventListener('click', triggerHack);
+    input.addEventListener('keypress', e => {
+        if (e.key === 'Enter') triggerHack();
+    });
+})();
