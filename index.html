@@ -20,7 +20,7 @@
             <div class="intro-logo"><span class="logo-bracket">&lt;</span>JP<span class="logo-bracket">/&gt;</span></div>
             <div class="intro-terminal" id="introTerminal"></div>
             <button id="startSystemBtn" class="intro-btn" style="display: none;">
-                [ INICIAR SISTEMA ]
+                <span data-i18n="intro_btn">[ INICIAR SISTEMA ]</span>
                 <span class="btn-glitch"></span>
             </button>
         </div>
@@ -51,13 +51,17 @@
                 <span class="logo-bracket">&lt;</span>JP<span class="logo-bracket">/&gt;</span>
             </a>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#about"    class="nav-link" data-section="about">Sobre mí</a></li>
-                <li><a href="#skills"   class="nav-link" data-section="skills">Habilidades</a></li>
-                <li><a href="#projects" class="nav-link" data-section="projects">Proyectos</a></li>
-                <li><a href="#minijuego" class="nav-link" data-section="minigame">Juego</a></li>
-                <li><a href="#contact"  class="nav-link" data-section="contact">Contacto</a></li>
+                <li><a href="#about"    class="nav-link" data-section="about" data-i18n="nav_about">Sobre mí</a></li>
+                <li><a href="#skills"   class="nav-link" data-section="skills" data-i18n="nav_skills">Habilidades</a></li>
+                <li><a href="#projects" class="nav-link" data-section="projects" data-i18n="nav_projects">Proyectos</a></li>
+                <li><a href="#minijuego" class="nav-link" data-section="minigame" data-i18n="nav_game">Juego</a></li>
+                <li><a href="#contact"  class="nav-link" data-section="contact" data-i18n="nav_contact">Contacto</a></li>
             </ul>
             <div class="nav-right">
+                <button class="lang-toggle" id="langToggle" aria-label="Cambiar idioma" title="English / Español">
+                    <span class="lang-flag" id="langFlag">🇬🇧</span>
+                    <span class="lang-label" id="langLabel">EN</span>
+                </button>
                 <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
                     <span class="sun-icon">☀️</span>
                     <span class="moon-icon">🌙</span>
@@ -75,40 +79,40 @@
         <div class="hero-inner">
             <div class="hero-tag">
                 <span class="blink-dot"></span>
-                Disponible para proyectos
+                <span data-i18n="hero_tag">Disponible para proyectos</span>
             </div>
             <h1 class="hero-title">
-                <span class="greeting">Hola, soy</span>
+                <span class="greeting" data-i18n="hero_greeting">Hola, soy</span>
                 <span class="hero-name">Juan Pablo</span>
                 <span class="typewriter-wrap">
                     <span id="typewriter"></span><span class="type-cursor">|</span>
                 </span>
             </h1>
-            <p class="hero-desc">
+            <p class="hero-desc" data-i18n="hero_desc">
                 Desarrollador apasionado por construir experiencias digitales que marcan la diferencia.
                 Transformo ideas en código elegante y funcional.
             </p>
             <div class="hero-ctas">
                 <button class="btn-primary" id="ctaBtn">
-                    <span>Ver proyectos</span>
+                    <span data-i18n="hero_cta">Ver proyectos</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </button>
-                <a href="#contact" class="btn-ghost">Hablemos</a>
+                <a href="#contact" class="btn-ghost" data-i18n="hero_talk">Hablemos</a>
             </div>
             <div class="hero-stats">
                 <div class="hero-stat">
                     <span class="stat-num" data-target="2">0</span><span class="stat-plus">+</span>
-                    <span class="stat-label">Años</span>
+                    <span class="stat-label" data-i18n="stat_years">Años</span>
                 </div>
                 <div class="hero-stat-divider"></div>
                 <div class="hero-stat">
                     <span class="stat-num" data-target="10">0</span><span class="stat-plus">+</span>
-                    <span class="stat-label">Proyectos</span>
+                    <span class="stat-label" data-i18n="stat_projects">Proyectos</span>
                 </div>
                 <div class="hero-stat-divider"></div>
                 <div class="hero-stat">
                     <span class="stat-num" data-target="8">0</span><span class="stat-plus">+</span>
-                    <span class="stat-label">Tecnologías</span>
+                    <span class="stat-label" data-i18n="stat_tech">Tecnologías</span>
                 </div>
             </div>
         </div>
@@ -121,8 +125,8 @@
     <!-- About -->
     <section id="about" class="section about">
         <div class="container">
-            <div class="section-label">Sobre mí</div>
-            <h2 class="section-title">Apasionado por el <em>código</em></h2>
+            <div class="section-label" data-i18n="about_label">Sobre mí</div>
+            <h2 class="section-title" data-i18n="about_title" data-i18n-html="1">Apasionado por el <em>código</em></h2>
             <div class="about-grid">
                 <div class="about-visual" data-reveal>
                     <div class="about-img-container">
@@ -137,24 +141,24 @@
                     </div>
                     <div class="floating-card card-1"><span>🐍</span> Python Dev</div>
                     <div class="floating-card card-2"><span>🌐</span> Full Stack</div>
-                    <div class="floating-card card-3"><span>🇬🇧</span> Inglés B2</div>
+                    <div class="floating-card card-3"><span>🇬🇧</span> <span data-i18n="card_english">Inglés B2</span></div>
                 </div>
                 <div class="about-content" data-reveal>
-                    <p class="about-lead">
+                    <p class="about-lead" data-i18n="about_lead" data-i18n-html="1">
                         Técnico en Desarrollo de Software egresado de <strong>Campuslands Floridablanca</strong>,
                         apasionado por construir soluciones que resuelven problemas reales.
                     </p>
-                    <p>
+                    <p data-i18n="about_desc">
                         He trabajado con Python, JavaScript, HTML5, CSS3 y MySQL en proyectos que van desde
                         sistemas de gestión de torneos hasta aplicaciones web y bases de datos relacionales.
                         Me caracterizo por el trabajo en equipo, la comunicación efectiva y el aprendizaje rápido.
                     </p>
                     <div class="soft-skills">
-                        <span class="soft-badge">💡 Resolución de problemas</span>
-                        <span class="soft-badge">🤝 Trabajo en equipo</span>
-                        <span class="soft-badge">⚡ Aprendizaje rápido</span>
-                        <span class="soft-badge">🗣️ Comunicación efectiva</span>
-                        <span class="soft-badge">🔄 Adaptabilidad</span>
+                        <span class="soft-badge" data-i18n="soft_1">💡 Resolución de problemas</span>
+                        <span class="soft-badge" data-i18n="soft_2">🤝 Trabajo en equipo</span>
+                        <span class="soft-badge" data-i18n="soft_3">⚡ Aprendizaje rápido</span>
+                        <span class="soft-badge" data-i18n="soft_4">🗣️ Comunicación efectiva</span>
+                        <span class="soft-badge" data-i18n="soft_5">🔄 Adaptabilidad</span>
                     </div>
                     <div class="skill-bars">
                         <div class="skill-bar-row">
@@ -166,12 +170,12 @@
                             <div class="skill-bar-track"><div class="skill-bar-fill" data-w="80"></div></div>
                         </div>
                         <div class="skill-bar-row">
-                            <div class="skill-bar-info"><span>Bases de datos</span><span>70%</span></div>
+                            <div class="skill-bar-info"><span data-i18n="skill_db">Bases de datos</span><span>70%</span></div>
                             <div class="skill-bar-track"><div class="skill-bar-fill" data-w="70"></div></div>
                         </div>
                     </div>
                     <div class="about-btn-row">
-                        <a href="#contact" class="btn-primary"><span>Contáctame</span></a>
+                        <a href="#contact" class="btn-primary"><span data-i18n="about_cta">Contáctame</span></a>
                     </div>
                 </div>
             </div>
@@ -181,34 +185,34 @@
     <!-- Education Timeline -->
     <section id="education" class="section education">
         <div class="container">
-            <div class="section-label">Formación</div>
-            <h2 class="section-title">Mi <em>trayectoria</em></h2>
+            <div class="section-label" data-i18n="edu_label">Formación</div>
+            <h2 class="section-title" data-i18n="edu_title" data-i18n-html="1">Mi <em>trayectoria</em></h2>
             <div class="timeline">
                 <div class="timeline-item" data-reveal>
                     <div class="timeline-dot"><span>📚</span></div>
                     <div class="timeline-card">
-                        <span class="timeline-period">Graduado</span>
-                        <h3>Bachillerato</h3>
+                        <span class="timeline-period" data-i18n="edu_graduated">Graduado</span>
+                        <h3 data-i18n="edu_highschool">Bachillerato</h3>
                         <p>Colegio Campestre Goyavier</p>
-                        <div class="timeline-tag">Secundaria</div>
+                        <div class="timeline-tag" data-i18n="edu_tag_secondary">Secundaria</div>
                     </div>
                 </div>
                 <div class="timeline-item" data-reveal>
                     <div class="timeline-dot"><span>🌍</span></div>
                     <div class="timeline-card">
-                        <span class="timeline-period">Nivel B2</span>
-                        <h3>Inglés</h3>
-                        <p>Comunicación profesional y técnica</p>
-                        <div class="timeline-tag">Idioma</div>
+                        <span class="timeline-period" data-i18n="edu_level_b2">Nivel B2</span>
+                        <h3 data-i18n="edu_english">Inglés</h3>
+                        <p data-i18n="edu_english_desc">Comunicación profesional y técnica</p>
+                        <div class="timeline-tag" data-i18n="edu_tag_language">Idioma</div>
                     </div>
                 </div>
                 <div class="timeline-item" data-reveal>
                     <div class="timeline-dot"><span>🎓</span></div>
                     <div class="timeline-card">
-                        <span class="timeline-period">2025 — Presente</span>
-                        <h3>Técnico en Desarrollo de Software</h3>
+                        <span class="timeline-period" data-i18n="edu_period_campus">2025 — Presente</span>
+                        <h3 data-i18n="edu_tech_degree">Técnico en Desarrollo de Software</h3>
                         <p>Campuslands</p>
-                        <div class="timeline-tag">Formación Técnica</div>
+                        <div class="timeline-tag" data-i18n="edu_tag_tech">Formación Técnica</div>
                     </div>
                 </div>
             </div>
@@ -219,7 +223,7 @@
     <section id="skills" class="section skills">
         <div class="container">
             <div class="section-label">Stack</div>
-            <h2 class="section-title">Mis <em>tecnologías</em></h2>
+            <h2 class="section-title" data-i18n="skills_title" data-i18n-html="1">Mis <em>tecnologías</em></h2>
             <!-- SKILLS MARQUEE CAROUSEL -->
             <div class="skills-marquee">
                 <div class="marquee-row" id="marqueeRow1">
@@ -261,10 +265,10 @@
     <!-- Projects -->
     <section id="projects" class="section projects">
         <div class="container">
-            <div class="section-label">Portafolio</div>
-            <h2 class="section-title">Mis <em>proyectos</em></h2>
+            <div class="section-label" data-i18n="projects_label">Portafolio</div>
+            <h2 class="section-title" data-i18n="projects_title" data-i18n-html="1">Mis <em>proyectos</em></h2>
             <div class="filter-bar">
-                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn active" data-filter="all" data-i18n="filter_all">Todos</button>
                 <button class="filter-btn" data-filter="web">Web</button>
                 <button class="filter-btn" data-filter="python">Python</button>
                 <button class="filter-btn" data-filter="software">Software</button>
@@ -291,8 +295,8 @@
                         </div>
                     </div>
                     <div class="project-body">
-                        <h3>⚽ Gestión de Torneos de Fútbol</h3>
-                        <p>Sistema para gestionar torneos internacionales de fútbol. Persistencia de datos con archivos JSON y estructura modular orientada a escalabilidad.</p>
+                        <h3 data-i18n="proj1_title">⚽ Gestión de Torneos de Fútbol</h3>
+                        <p data-i18n="proj1_desc">Sistema para gestionar torneos internacionales de fútbol. Persistencia de datos con archivos JSON y estructura modular orientada a escalabilidad.</p>
                         <div class="project-tech">
                             <span>Python</span><span>JSON</span><span>Git</span>
                         </div>
@@ -323,8 +327,8 @@
                         </div>
                     </div>
                     <div class="project-body">
-                        <h3>🏨 App Web de Gestión de Hotel</h3>
-                        <p>Aplicación para reservas hoteleras con arquitectura MVC, autenticación via LocalStorage y panel administrativo con dashboard de métricas y operaciones CRUD.</p>
+                        <h3 data-i18n="proj2_title">🏨 App Web de Gestión de Hotel</h3>
+                        <p data-i18n="proj2_desc">Aplicación para reservas hoteleras con arquitectura MVC, autenticación via LocalStorage y panel administrativo con dashboard de métricas y operaciones CRUD.</p>
                         <div class="project-tech">
                             <span>JavaScript</span><span>HTML5</span><span>CSS3</span><span>LocalStorage</span><span>Git</span>
                         </div>
@@ -351,8 +355,8 @@
                         </div>
                     </div>
                     <div class="project-body">
-                        <h3>🏠 Base de Datos Inmobiliaria</h3>
-                        <p>Diseño y desarrollo de base de datos para sistema de gestión inmobiliaria. Triggers de auditoría para rastrear cambios de estado en propiedades y nuevos contratos.</p>
+                        <h3 data-i18n="proj3_title">🏠 Base de Datos Inmobiliaria</h3>
+                        <p data-i18n="proj3_desc">Diseño y desarrollo de base de datos para sistema de gestión inmobiliaria. Triggers de auditoría para rastrear cambios de estado en propiedades y nuevos contratos.</p>
                         <div class="project-tech">
                             <span>MySQL</span><span>SQL</span><span>Normalización</span>
                         </div>
@@ -376,23 +380,23 @@
     <!-- Minigame Section -->
     <section id="minijuego" class="section minigame">
         <div class="container">
-            <div class="section-label">Sistema Seguro</div>
-            <h2 class="section-title">Modo <em>Desarrollador</em></h2>
+            <div class="section-label" data-i18n="game_label">Sistema Seguro</div>
+            <h2 class="section-title" data-i18n="game_title" data-i18n-html="1">Modo <em>Desarrollador</em></h2>
             <div class="minigame-card" data-reveal>
                 <div class="minigame-icon">
                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                 </div>
-                <p>Acceso restringido. Escribe la palabra secreta para desbloquear la simulación del sistema central.</p>
+                <p data-i18n="game_desc">Acceso restringido. Escribe la palabra secreta para desbloquear la simulación del sistema central.</p>
                 <details class="hack-hint-accordion">
-                    <summary>¿Necesitas una pista?</summary>
-                    <div class="hack-hint-content">
+                    <summary data-i18n="game_hint_q">¿Necesitas una pista?</summary>
+                    <div class="hack-hint-content" data-i18n="game_hint_a" data-i18n-html="1">
                         Escribe la palabra <strong>hack</strong> para jugar.
                     </div>
                 </details>
                 <div class="minigame-input-group">
                     <input type="text" id="hackInput" placeholder="Terminal input..." autocomplete="off">
                     <button class="btn-primary" id="hackBtn">
-                        <span>Desbloquear</span>
+                        <span data-i18n="game_unlock">Desbloquear</span>
                     </button>
                 </div>
                 <p id="hackError" class="hack-error"></p>
@@ -403,12 +407,12 @@
     <!-- Contact -->
     <section id="contact" class="section contact">
         <div class="container">
-            <div class="section-label">Contacto</div>
-            <h2 class="section-title">Hablemos de tu <em>proyecto</em></h2>
+            <div class="section-label" data-i18n="contact_label">Contacto</div>
+            <h2 class="section-title" data-i18n="contact_title" data-i18n-html="1">Hablemos de tu <em>proyecto</em></h2>
             <div class="contact-grid">
                 <div class="contact-info-col" data-reveal>
-                    <h3>¿Tienes un proyecto en mente?</h3>
-                    <p>Estoy disponible para proyectos freelance, colaboraciones y nuevas oportunidades. ¡No dudes en escribirme!</p>
+                    <h3 data-i18n="contact_heading">¿Tienes un proyecto en mente?</h3>
+                    <p data-i18n="contact_info">Estoy disponible para proyectos freelance, colaboraciones y nuevas oportunidades. ¡No dudes en escribirme!</p>
                     <div class="contact-socials">
                         <a href="https://linkedin.com" target="_blank" class="social-btn">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
@@ -431,18 +435,18 @@
                 <form class="contact-form" id="contactForm" data-reveal>
                     <div class="field">
                         <input type="text" name="name" id="inputName" required placeholder=" " autocomplete="name">
-                        <label for="inputName">Tu nombre</label>
+                        <label for="inputName" data-i18n="form_name">Tu nombre</label>
                     </div>
                     <div class="field">
                         <input type="email" name="email" id="inputEmail" required placeholder=" " autocomplete="email">
-                        <label for="inputEmail">Tu email</label>
+                        <label for="inputEmail" data-i18n="form_email">Tu email</label>
                     </div>
                     <div class="field">
                         <textarea name="message" id="inputMsg" rows="5" required placeholder=" "></textarea>
-                        <label for="inputMsg">Tu mensaje</label>
+                        <label for="inputMsg" data-i18n="form_msg">Tu mensaje</label>
                     </div>
                     <button type="submit" class="btn-primary btn-full" id="submitBtn">
-                        <span id="btnLabel">Enviar mensaje</span>
+                        <span id="btnLabel" data-i18n="form_send">Enviar mensaje</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                     </button>
                 </form>
@@ -455,14 +459,15 @@
         <div class="container">
             <div class="footer-inner">
                 <div class="footer-logo"><span class="logo-bracket">&lt;</span>JP<span class="logo-bracket">/&gt;</span></div>
-                <p>Diseñado y construido por <strong>Juan Pablo Quijano Martinez</strong></p>
-                <span class="footer-copy">© 2025 — Hecho con ❤️ y mucho ☕</span>
+                <p data-i18n="footer_by" data-i18n-html="1">Diseñado y construido por <strong>Juan Pablo Quijano Martinez</strong></p>
+                <span class="footer-copy" data-i18n="footer_copy">© 2025 — Hecho con ❤️ y mucho ☕</span>
                 <div class="hidden-secret">Pssst... la palabra secreta es: <span>hack</span></div>
             </div>
         </div>
     </footer>
 
     <script src="script.js?v=5"></script>
+    <script src="i18n.js?v=1"></script>
     <!-- INLINE COUNTER — runs unconditionally, no external dependencies -->
     <script>
     (function(){

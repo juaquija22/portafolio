@@ -316,6 +316,31 @@ html[data-theme="light"] .navbar.scrolled {
 .nav-link:hover, .nav-link.active { color: var(--text); }
 .nav-link:hover::after, .nav-link.active::after { width: 100%; }
 .nav-right { display: flex; align-items: center; gap: 0.8rem; }
+.lang-toggle {
+    background: var(--surface); border: 1px solid var(--border);
+    height: 42px; border-radius: 50px;
+    display: flex; align-items: center; gap: 6px;
+    padding: 0 14px 0 10px;
+    font-size: 0.82rem; font-weight: 700;
+    color: var(--text2); letter-spacing: 0.04em;
+    transition: var(--t); cursor: none;
+    position: relative; overflow: hidden;
+}
+.lang-toggle:hover { background: var(--surface-h); border-color: var(--gold); color: var(--gold); }
+.lang-toggle::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(212,175,55,0.1), transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+}
+.lang-toggle:hover::before { opacity: 1; }
+.lang-flag { font-size: 1.15rem; line-height: 1; position: relative; z-index: 1; }
+.lang-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.78rem; font-weight: 700;
+    position: relative; z-index: 1;
+    transition: color 0.3s;
+}
+.lang-toggle:hover .lang-label { color: var(--gold); }
 .theme-toggle {
     background: var(--surface); border: 1px solid var(--border);
     width: 42px; height: 42px; border-radius: 50%;
